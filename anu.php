@@ -26,7 +26,8 @@ function showUser(str) {
         xmlhttp.send();
     }
 }
-function showModel(str) {
+function showModel(str,count) {
+    
    
     if (str == "") {
         document.getElementById("txtHint").innerHTML = "";
@@ -46,7 +47,7 @@ function showModel(str) {
                 
             }
         };
-        xmlhttp.open("GET","getmodel.php?r="+str,true);
+        xmlhttp.open("GET","getmodel.php?r="+str+"&count="+count,true);
         xmlhttp.send();
     }
 }
