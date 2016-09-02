@@ -23,6 +23,7 @@ th {text-align: left;}
 
 <?php
 $q = $q =($_GET['q']);
+
  $servername = "localhost";
 $username = "root";
 $fpassword = "";
@@ -65,7 +66,7 @@ echo "</table>";
 echo "||";
 $sql="SELECT model FROM list WHERE company='$q'";
 $result = mysqli_query($con,$sql);
-echo '<select name="usero" onchange="showModel(this.value)"><option>Select</option>';
+echo '<select name="usero" onchange="showModel(this.value,1)"><option>Select</option>';
 while($row = mysqli_fetch_array($result)) {
     echo "<option>".$row['model']."</option>";
     
