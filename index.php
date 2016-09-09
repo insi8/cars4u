@@ -4,7 +4,12 @@ session_start();
 
 <html>
 <head>
+   
+    
+   
+    
 <script>
+    
 function showUser(str) {
    
     if (str == "") {
@@ -49,15 +54,62 @@ function showModel(str,count) {
                
                document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
                 
+               
             }
         };
         xmlhttp.open("GET","getmodel.php?r="+str+"&count="+count,true);
         xmlhttp.send();
     }
+     history.pushState({id: 'SOME ID'}, '', 'index.php');
 }
+function viewTable(str) {
+     document.getElementById('tableDisplay').style.display = "block";
+    
+    document.getElementById('txtHint').style.display = "none";
+    if (str == "") {
+        document.getElementById("tableDisplay").innerHTML = "";
+        return;
+    } else { 
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+               
+               document.getElementById("tableDisplay").innerHTML = xmlhttp.responseText;
+                
+               
+            }
+        };
+        xmlhttp.open("GET","viewdata.php?q="+str,true);
+        xmlhttp.send();
+    }
+    
+}
+function goBack()
+{
+    document.getElementById('tableDisplay').style.display = "none";
+    document.getElementById('txtHint').style.display = "block";
+    
+    
+    
+}
+
+
+
+
+
+
+
+
 </script>
 </head>
 <body>
+    <div name="anu">
   <?php
    $_SESSION['scompany']="";
 $servername = "localhost";
@@ -111,16 +163,20 @@ $result = $conn->query($sql);
 </form> 
      </b></div>
 
-
+<form>History<div id="History"><b>
+<select name="usercomfort" onclick="showHistory()">
+    
+</select></b></div>
+</form>
 <form>
     
     
     
     
 </form>
-<form>
-<select name="usercomfort" onchange="showModel(this.value,7)">
-    <option>Comfort</option>
+<form>Comfort
+<select name="usercomfort" onchange="showModel(this.value,5)">
+    <option>Select</option>
     <option value="15">10-20</option>
      <option value="25">20-30</option>
       <option value="35">30-40</option>
@@ -134,15 +190,17 @@ $result = $conn->query($sql);
 </select>
 </form>
 <form>
-   All <input type="radio" name="fuel" onchange="showModel(this.value,8)">
-  petrol <input type="radio" name="fuel" onchange="showModel(this.value,8)">
-  diesel <input type="radio" name="fuel" onchange="showModel(this.value,8)">
+    <input type="radio" name="fuel" value="All" onchange="showModel(this.value,1)"> All
+ <input type="radio" name="fuel" value="Petrol" onchange="showModel(this.value,1)">  petrol
+   <input type="radio" name="fuel" value="Diesel" onchange="showModel(this.value,1)">diesel
                 
     
     
 </form>
-<div id="txtHint"><b>Person info will be listed here...</b></div>
-
+<div id="txtHint" style="display:block;"><b>Person info will be listed here...</b></div>
+<div id="tableDisplay" style="display:block;"><b>Person info will be listed here...</b></div>
+    </div>
+    <input type="button" id="push" value="Push History"/>
 </body>
 </html>
-Run example »
+
