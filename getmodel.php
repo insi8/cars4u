@@ -47,10 +47,10 @@ if (!$con) {
  $q =($_GET['r']);
    
  $count =($_GET['count']);
- $sel_list=array("CAR_NAME","FUEL_TYPE","asdfgad","asdfa","asdfa","asdfad","asdfasdf","asdfadf");
+ $sel_list=array("CAR_NAME","FUEL_TYPE","asdfgad","asdfa","asdfa","COMFORT_PT","asdfasdf","asdfadf");
  if($count<2)
  {
-      $company= $_SESSION["COMPANY_NAME"];
+    //  $company= $_SESSION["COMPANY_NAME"];
 
  
 
@@ -75,21 +75,24 @@ if(!isset($_SESSION[$rr]))
    $sql= str_replace($temp, "", $sql);
     
 }
-if($q!="Select")
+echo $q."<br>";
+if(($q!="Select")&&($q!="All"))
 {
  $_SESSION[$rr]=$q;
  
+ $sql=$sql." "."AND"." ".$rr."="."'$q'";
+ //$sql=$sql." "."AND CAR_NAME='$q'";
  
- $sql=$sql." "."AND CAR_NAME='$q'";
- echo $sql;
- $_SESSION["uquery"]=$sql;
+ 
 }
+echo $sql;
+$_SESSION["uquery"]=$sql;
  }
- if($count==7)
+ if($count==5)
  {
     
      $sql=$_SESSION["uquery"];
-     $rr="COMFORT_LEVEL";
+     $rr=$sel_list[$count];
 if(!isset($_SESSION[$rr]))
     {
 //    $temp="company=";
@@ -100,12 +103,14 @@ if(!isset($_SESSION[$rr]))
  else {
      $tempal=$_SESSION[$rr];
    $va=$tempal-5;$vb=$tempal+5;  
-   echo $vb;
-   $temp="AND COMFORT_LEVEL BETWEEN '$va' AND '$vb'";
+  
+   
+   $temp="AND"." ".$rr." "."BETWEEN"."'$va'"." "."AND"." "."'$vb'";
    
    echo $temp;
    echo "<br>";
    $sql= str_replace($temp, "", $sql);
+    $_SESSION["uquery"]=$sql;
     
 }
 if($q!="Select")
@@ -113,7 +118,7 @@ if($q!="Select")
  $_SESSION[$rr]=$q;
   $va=$q-5;$vb=$q+5;
  
- $sql=$sql." "."AND COMFORT_LEVEL BETWEEN '$va' AND '$vb'";
+ $sql=$sql." "."AND"." ".$rr." "."BETWEEN"."'$va'"." "."AND"." "."'$vb'";
  echo $sql;
  $_SESSION["uquery"]=$sql;
 }
@@ -132,10 +137,16 @@ echo "<table>
 </tr>";
 while($row = mysqli_fetch_array($result)) {
     echo "<tr>";
-   
+   $id=$row['CAR_ID'];
     echo "<td>" . $row['COMPANY_NAME'] . "</td>";
     echo "<td>" . $row['CAR_NAME'] . "</td>";
-    echo "<td>" . $row['VARIANT_NAME'] . "</td>";
+    echo "<td>";
+    //echo'<a href="viewdata.php?id=' . $id . '">';
+   echo "<button onclick=viewTable('$id')>";
+   
+    echo $row['VARIANT_NAME'] ;
+   echo "</button>";
+    echo "</td>";
       echo "<td>" . $row['E_S_PRICE'] . "</td>";
   
     echo "</tr>";
