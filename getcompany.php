@@ -85,21 +85,29 @@ if($q!="Select")
 }
 //$sql="SELECT * FROM list WHERE company = '$q'";
 $result = mysqli_query($con,$sql);
+
+echo "asdf";
+echo'</a>';
 echo "<table>
 <tr>
 
 <th>COMPANY_NAME</th>
 <th>CAR_NAME</th>
 <th>VARIANT_NAME</th>
-<th>E_S_PRICE</th>
+<th>E_S_PRIyCE</th>
 
 </tr>";
 while($row = mysqli_fetch_array($result)) {
     echo "<tr>";
-   
+   $id=$row['CAR_ID'];
     echo "<td>" . $row['COMPANY_NAME'] . "</td>";
     echo "<td>" . $row['CAR_NAME'] . "</td>";
-    echo "<td>" . $row['VARIANT_NAME'] . "</td>";
+     echo "<td>";
+    //echo'<a href="viewdata.php?id=' . $id . '">';
+   echo "<button onclick=viewTable('$id')>";
+   
+    echo $row['VARIANT_NAME'] ;
+   echo "</button>";
       echo "<td>" . $row['E_S_PRICE'] . "</td>";
   
     echo "</tr>";
@@ -115,6 +123,7 @@ while($row = mysqli_fetch_array($result)) {
     
     
 }echo "</select></form>";
+
 
 mysqli_close($con);
 ?>
