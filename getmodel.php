@@ -15,7 +15,7 @@
 
 
     <link rel="stylesheet" href="css/normalize.css">
-
+<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
 
     <!-- Bootstrap core CSS -->
@@ -25,10 +25,11 @@
     <link href="css/mdb.min.css" rel="stylesheet">
 
         <link rel="stylesheet" href="css/style1.css">
+         <link rel="stylesheet" href="css/style7.css">
         </head>
         <body>
             <?php
-
+$id=0;
        $servername = "localhost";
     $username = "root";
     $fpassword = "";
@@ -45,7 +46,9 @@
      $q =($_GET['r']);
 
      $count =($_GET['count']);
-     $sel_list=array("CAR_NAME","FUEL_TYPE","asdfgad","asdfa","asdfa","COMFORT_PT","asdfasdf","asdfadf");
+     $valrang=array(0,0,0,0,50000,5,2,5,5,1);
+         
+     $sel_list=array("CAR_NAME","FUEL_TYPE","asdfgad","asdfa","E_S_PRICE","COMFORT_PT","MILEAGE_CITY","SECURITY_PT","EOD_PT","SEATING_CAP");
      if($count<2)
      {
     $sql=$_SESSION["uquery"];
@@ -78,7 +81,7 @@
     echo $sql;
     $_SESSION["uquery"]=$sql;
      }
-     if($count==5)
+     if($count>3)
      {
 
          $sql=$_SESSION["uquery"];
@@ -89,7 +92,7 @@
         } 
      else {
          $tempal=$_SESSION[$rr];
-       $va=$tempal-5;$vb=$tempal+5;  
+       $va=$tempal-$valrang[$count];$vb=$tempal+$valrang[$count];  
 
 
        $temp="AND"." ".$rr." "."BETWEEN"."'$va'"." "."AND"." "."'$vb'";
@@ -103,7 +106,7 @@
     if($q!="Select")
     {
      $_SESSION[$rr]=$q;
-      $va=$q-5;$vb=$q+5;
+      $va=$q-$valrang[$count];$vb=$q+$valrang[$count];
 
      $sql=$sql." "."AND"." ".$rr." "."BETWEEN"."'$va'"." "."AND"." "."'$vb'";
      echo $sql;
@@ -111,16 +114,10 @@
     }
      }
 $i=1;
+$try=$sql;
 $sql=$sql." "."LIMIT 9";
   $result = mysqli_query($con,$sql);
-//   $rowcount=mysqli_num_rows($result);
-//   if($rowcount%3==0)
-//   {
-//       $row=$rowcount/3;
-//   }
-// else {
-//$row=($rowcount/3)+1;      
-//}
+ 
   $count=0;
    while($row = mysqli_fetch_array($result)) 
    {
@@ -133,7 +130,8 @@ $sql=$sql." "."LIMIT 9";
  echo '<div class="col-md-4">';
   echo '<div class="card">';
   echo ' <div class="view overlay hm-white-slight">';
-  echo '   <img src="https://imgct2.aeplcdn.com/img/180x135/car-data/big/nissan-sunny-default-transparent.png-version2016090815.png" class="img-fluid" alt="">';
+   $link =$row['CAR_IMG_URL'];
+  echo " <img src='$link' class='img-fluid' alt=''>";
   echo '<a href="#!">';
   echo '<div class="mask"></div>';   
   echo '</a>';    
@@ -141,9 +139,10 @@ $sql=$sql." "."LIMIT 9";
   echo '<div class="card-block">';
   echo ' <h5 class="card-title">'.$row['COMPANY_NAME'].' '. $row['CAR_NAME'].' '.'</h5>';
   echo '<p class="card-text"><h6>'.$row['VARIANT_NAME'].' '.'<br>'. '₹'. $row['E_S_PRICE'].'<h6></p>'; 
+  echo '<br>';
   echo '<div class="read-more">';
   
-    echo "<button onclick=viewTable('$id') class='btn btn-primary'>Read more</button>";
+    echo "<button  onclick=viewTable('$id') class='btn btn-primary'>Read more</button>";
   echo ' </div>';
   echo '</div>';
   echo '</div>';
@@ -157,9 +156,20 @@ $sql=$sql." "."LIMIT 9";
   }
   $count=$count-1;
   }
+  $count=$count+1;
+  
+       echo '</div>';
+  
   
  $_SESSION["more"]=$id;
-    echo "<button onclick=viewMore('5') class='btn btn-primary'>More</button>";
+  $result = mysqli_query($con,$try);
+  $rowcount=mysqli_num_rows($result);
+  if($rowcount>9)
+  {
+  
+  
+ $m=0;
+  echo "<button id='rem' onclick=viewMore('$m') class='push_button red'>View more</button>";}
     mysqli_close($con);
 
 //    echo $count;      ?>
