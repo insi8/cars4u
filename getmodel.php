@@ -1,181 +1,383 @@
-    <!DOCTYPE html>
-    <!--
-    To change this license header, choose License Headers in Project Properties.
-    To change this template file, choose Tools | Templates
-    and open the template in the editor.
-    -->
-    <?php
-    session_start();
-    ?>
-    <html>
-        <head>
-            <meta charset="UTF-8">
-            <title></title>
 
+Back (accesskey b)    Save (accesskey s)    	File: /public_html/index.php
+ 	Status: This file has not yet been saved
 
+<!DOCTYPE html>
+  <?php
+        session_start();
+        ?>
+  <?php
+            
+            $uquery="SELECT * FROM tbl_car WHERE CAR_ID IS NOT NULL";
+            $_SESSION["uquery"]=$uquery;
+            
 
-    <link rel="stylesheet" href="css/normalize.css">
-<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+            ?>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Cars4U</title>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+    
+     <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Material Design Bootstrap -->
     <link href="css/mdb.min.css" rel="stylesheet">
-
-        <link rel="stylesheet" href="css/style1.css">
-         <link rel="stylesheet" href="css/style7.css">
-        </head>
-        <body>
-            <?php
-$id=0;
-       $servername = "localhost";
-    $username = "root";
-    $fpassword = "";
-    $dbname = "oui";
-
-
-    $con = new mysqli($servername, $username, $fpassword, $dbname);
-
-    if (!$con) {
-        die('Could not connect: ' . mysqli_error($con));
-    }
-      mysqli_select_db($con,"ajax_demo");
-
-     $q =($_GET['r']);
-
-     $count =($_GET['count']);
-     $valrang=array(0,0,0,0,50000,5,2,5,5,1);
-         
-     $sel_list=array("CAR_NAME","FUEL_TYPE","asdfgad","asdfa","E_S_PRICE","COMFORT_PT","MILEAGE_CITY","SECURITY_PT","EOD_PT","SEATING_CAP");
-     if($count<2)
-     {
-    $sql=$_SESSION["uquery"];
-    $tempal="dsaf";
-    $rr=$sel_list[$count];
-    if(!isset($_SESSION[$rr]))
-        {
     
+        <link rel="stylesheet" href="css/style10.css">
+        <link rel="stylesheet" href="css/footer.css">
+         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+        <script src="js/index1.js"></script>
+        <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/tether.min.js"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <script>
+    
+    
+    
+    </script>
+        
+                <script>
+
+
+
+        function showUser(str) {
+
+           /*fuction to display company name and car model list menu  seperate fuction is used since it returns two value 
+             table and select menu of mode*/
+           document.getElementById('more').style.display = "none";
+            if (str == "") { 
+                document.getElementById("txtHint").innerHTML = "";
+                return;
+                           }
+                           else {
+                                document.getElementById('pic').style.display = "none";
+        //        document.getElementById('Spinner').style.display = "block";
+                                   if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                                       xmlhttp = new XMLHttpRequest();
+                                                                } 
+                                    else {
+                    // code for IE6, IE5
+                                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                                         }
+                                    xmlhttp.onreadystatechange = function() {
+                                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                                                 var responseArray = xmlhttp.responseText.split("||");/*splits the returned value to two.
+                                      * '||' used as  seperator*/ 
+
+                                                 document.getElementById("txtHint").innerHTML = responseArray[0];//returns table selection
+                                                 document.getElementById("showmodel").innerHTML = responseArray[1];//returns select menu of car models
+
+                                                                                               }                                                  
+                                                                            };
+                                    xmlhttp.open("GET","getcompany.php?q="+str,true);/*transfer parameter to getmoded
+                                 *  php page here parameter is car company name*/
+
+                                     xmlhttp.send();
+                               }
         }
-     else {
-         $tempal=$_SESSION[$rr];
-       $temp="AND"." ".$sel_list[$count]."=";   
+        function showModel(str,count) {
+            /*function to display selection list according to condition set by user.All conditions except company name
+             use this function*/
+              document.getElementById('more').style.display = "none";
+            if (str == "") {
+                document.getElementById("txtHint").innerHTML = "";
+                return;
+                           } 
+            else { 
+                document.getElementById('pic').style.display = "none";
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                } 
+            else {
+                    // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+            xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 
-       $temp=$temp."'$tempal'";
-       echo $temp;
-       echo "<br>";
-       $sql= str_replace($temp, "", $sql);
-
-    }
-    echo $q."<br>";
-    if(($q!="Select")&&($q!="All"))
-    {
-     $_SESSION[$rr]=$q;
-
-     $sql=$sql." "."AND"." ".$rr."="."'$q'";
-    
-
-
-    }
-    echo $sql;
-    $_SESSION["uquery"]=$sql;
-     }
-     if($count>3)
-     {
-
-         $sql=$_SESSION["uquery"];
-         $rr=$sel_list[$count];
-    if(!isset($_SESSION[$rr]))
-        {
-   
-        } 
-     else {
-         $tempal=$_SESSION[$rr];
-       $va=$tempal-$valrang[$count];$vb=$tempal+$valrang[$count];  
+                       //value returned on each selection is transfered to division "txtHint"
+                        document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
 
 
-       $temp="AND"." ".$rr." "."BETWEEN"."'$va'"." "."AND"." "."'$vb'";
-
-       echo $temp;
-       echo "<br>";
-       $sql= str_replace($temp, "", $sql);
-        $_SESSION["uquery"]=$sql;
-
-    }
-    if($q!="Select")
-    {
-     $_SESSION[$rr]=$q;
-      $va=$q-$valrang[$count];$vb=$q+$valrang[$count];
-
-     $sql=$sql." "."AND"." ".$rr." "."BETWEEN"."'$va'"." "."AND"." "."'$vb'";
-     echo $sql;
-     $_SESSION["uquery"]=$sql;
-    }
-     }
-$i=1;
-$try=$sql;
-$sql=$sql." "."LIMIT 9";
-  $result = mysqli_query($con,$sql);
- 
-  $count=0;
-   while($row = mysqli_fetch_array($result)) 
-   {
-         $id=$row['CAR_ID'];
-
-           if($count==0)
-           {
-   echo '<div class="row">';
-           }
- echo '<div class="col-md-4">';
-  echo '<div class="card">';
-  echo ' <div class="view overlay hm-white-slight">';
-   $link =$row['CAR_IMG_URL'];
-  echo " <img src='$link' class='img-fluid' alt=''>";
-  echo '<a href="#!">';
-  echo '<div class="mask"></div>';   
-  echo '</a>';    
-  echo '  </div>'; 
-  echo '<div class="card-block">';
-  echo ' <h5 class="card-title">'.$row['COMPANY_NAME'].' '. $row['CAR_NAME'].' '.'</h5>';
-  echo '<p class="card-text"><h6>'.$row['VARIANT_NAME'].' '.'<br>'. '₹'. $row['E_S_PRICE'].'<h6></p>'; 
-  echo '<br>';
-  echo '<div class="read-more">';
-  
-    echo "<button  onclick=viewTable('$id') class='btn btn-primary'>Read more</button>";
-  echo ' </div>';
-  echo '</div>';
-  echo '</div>';
-  echo '</div>';
- 
- 
-  if($count=0)
-  {
-  echo '</div>';
-  $count=3;
-  }
-  $count=$count-1;
-  }
-  $count=$count+1;
-  
-       echo '</div>';
-  
-  
- $_SESSION["more"]=$id;
-  $result = mysqli_query($con,$try);
-  $rowcount=mysqli_num_rows($result);
-  if($rowcount>9)
-  {
-  
-  
- $m=0;
-  echo "<button id='rem' onclick=viewMore('$m') class='push_button red'>View more</button>";}
-    mysqli_close($con);
-
-//    echo $count;      ?>
+                                                                          }
+                                                    };
+           /*Passes selected value "str" and an identifer "count" to identify what was selected by user*/
+            xmlhttp.open("GET","getmodel.php?r="+str+"&count="+count,true);
+            xmlhttp.send();
+                 }
+            history.pushState({id: 'SOME ID'}, '', 'index.php');
+        }
+        function viewTable(str) {
+            /*Fuction to view car details when user select an entry in the selection result.It hides the
+             * selection result 
+             * .......-*/
+          
+            document.getElementById('tableDisplay').style.display = "block";
+            document.getElementById('txtHint').style.display = "none";
+            document.getElementById('more').style.display = "none";
+              document.getElementById("wrapper").style.backgroundColor="white";
             
- <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+            
+            if (str == "") {
+                document.getElementById("tableDisplay").innerHTML = "";
+                return;
+            } 
+            else { 
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                                           } 
+                else {
+                    // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                     }
+                xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                    document.getElementById("tableDisplay").innerHTML = xmlhttp.responseText;
+                   window.scrollTo(0, 0);
+                                                                      }
+                                                        };
+                xmlhttp.open("GET","viewdata.php?q="+str,true);
+                xmlhttp.send();
+                }  
+
+        }
+        
+         function viewMore(str) {
+            /*Fuction to view car details when user select an entry in the selection result.It hides the
+             * selection result 
+             * .......-*/
+             document.getElementById('rem').style.display = "none";
+            
+            if (str == "") {
+                document.getElementById("tableDisplay").innerHTML = "";
+                return;
+            } 
+            else { 
+                if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                                           } 
+                else {
+                    // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                     }
+                xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                      document.getElementById('more').style.display = "block";
+                    document.getElementById("more").innerHTML = xmlhttp.responseText;
+                                                                      }
+                                                        };
+                xmlhttp.open("GET","viewmore.php?q="+str,true);
+                xmlhttp.send();
+                }  
+
+        }
+        function goBack()
+        {
+            document.getElementById("wrapper").style.backgroundColor="#151515";
+            /*Funtion to hide the car details and view the selection result*/
+            document.getElementById('tableDisplay').style.display = "none";//"tableDisplay" is car details
+            document.getElementById('txtHint').style.display = "block";//"txtHint"selection result
+             document.getElementById('more').style.display = "block";
+        }
+                </script>
+
+    
+    
+    
+  </head>
+
+  <body>
+      
+
+    <nav>
+        <ul><div id="top"></div>
+      
+       <?php
+                    $_SESSION['scompany']="";
+                    $servername = "localhost";
+                    $username = "u959295034_root";
+                    $fpassword = "harikrishnan";
+                    $dbname = "u959295034_oui";
+                    $conn = new mysqli($servername, $username, $fpassword, $dbname);// Check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                                              } 
+                    $sql = "SELECT COMPANY_NAME FROM tbl_car GROUP BY COMPANY_NAME ";
+                    $result = $conn->query($sql);  
+                    if ($result->num_rows > 0) {?>  
+      
+      
+       
+       
+       
+       
+       
+      <li>
+          <form>Company
+                        <select name="users" onchange="showUser(this.value)">
+                   <option selected="true"disabled="true">None</option>
+                            <option>All</option>
+                            <?php
+                            // output data of each row
+                             while($row = $result->fetch_assoc()) {
+                             ?>  
+            <option value="<?php echo $row['COMPANY_NAME']; ?>"> <?php echo$row["COMPANY_NAME"]?></option>
+        <?php }}
+        ?> 
+
+          </select>
+        </form>
+          <?php
+//            if(!isset($_SESSION["uquery"]))
+//            {
+//            $uquery="SELECT * FROM tbl_car WHERE CAR_ID IS NOT NULL";
+//            $_SESSION["uquery"]=$uquery;
+//            }
+//
+//            ?>
+          
+          
+          
+          
+      </li>
+       <li> Model<div id="showmodel"><b>
+
+        <form>
+            <select>
+                <option>All</option>
+
+             </select>
+        </form> 
+             </b></div></li>
+       <li><form>Fuel Type<br>
+            <input type="radio" name="fuel" value="All" onchange="showModel(this.value,1)"> All
+         <input type="radio" name="fuel" value="Petrol" onchange="showModel(this.value,1)">  petrol
+           <input type="radio" name="fuel" value="Diesel" onchange="showModel(this.value,1)">diesel
+
+
+
+        </form></li>
+        
+        
+         <li><form>Price Range
+
+
+            
+            
+             <div id="slider">
+	<input class="bar" type="range" min="300000" max="3800000" id="rangeinput" value="1900000" onchange="rangevalue.value=value;showModel(this.value,4)"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span class="highlight"></span>
+	<output id="rangevalue">1900000</output>
+</div>
+        </form></li>
+   
+    <li><form>Comfort
+
+            
+            
+             <div id="slider">
+	<input class="bar" type="range" id="rangeinput" value="50" onchange="rangevalue.value=value;showModel(this.value,5)"/>
+	<span class="highlight"></span>
+	<output id="rangevalue">50</output>
+</div>
+        </form></li>
+        
+        
+        <li><form>Mileage
+
+            
+            
+             <div id="slider">
+	<input class="bar" type="range" min="0" max="30" id="rangeinput" value="15" onchange="rangevalue.value=value;showModel(this.value,6)"/>
+	<span class="highlight"></span>
+	<output id="rangevalue">15</output>
+</div>
+        </form></li>
+         <li><form>Security
+
+            
+            
+             <div id="slider">
+	<input class="bar" type="range" id="rangeinput" value="50" onchange="rangevalue.value=value;showModel(this.value,7)"/>
+	<span class="highlight"></span>
+	<output id="rangevalue">50</output>
+</div>
+        </form></li>
+          <li><form>Ease of driving
+
+
+            
+            
+             <div id="slider">
+	<input class="bar" type="range" id="rangeinput" value="50" onchange="rangevalue.value=value;showModel(this.value,8)"/>
+	<span class="highlight"></span>
+	<output id="rangevalue">50</output>
+</div>
+        </form></li>
+        
+        <li> <form>Seating Capacity
+
+
+            
+            
+             <div id="slider">
+	<input class="bar" type="range"  min="0" max="15" id="rangeinput" value="7" onchange="rangevalue.value=value;showModel(this.value,9)"/>
+	<span class="highlight"></span>
+	<output id="rangevalue">&nbsp;&nbsp;7</output>
+</div>
+        </form></li>     
+        
+        
+        
+        
+        
+    
+  </ul>
+</nav>
+<div class="openNav">
+  <div class="icon"></div>
+</div>
+
+<div class="wrapper" id="wrapper">
+     <section>
+     <img src="images/logo.png">    
+    <div id="txtHint" style="display:block;"><b></b></div>
+     <div id="more" style="display:block;"><b></b></div>
+        <div id="tableDisplay" style="display:block;"><b></b></div>
+        <div id="pic" style="display:block;">
+            <img src="images/home-1_2.jpg" width="1000px" height="500px" >
+     <div class="container">
+
+         
+         
+        </div>
+  </section>
+        </div>
+</div>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
         <script src="js/index.js"></script>
-        </body>
-    </html>
+
+    
+    
+    
+  </body>
+</html>
