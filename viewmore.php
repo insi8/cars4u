@@ -26,10 +26,10 @@ and open the template in the editor.
     <body>
         <?php
         
-       $servername = "localhost";
-    $username = "root";
-    $fpassword = "";
-    $dbname = "oui";
+      $servername = "localhost";
+      $username = "u959295034_root";
+      $fpassword = "harikrishnan";
+      $dbname = "u959295034_oui";
 
 
     $con = new mysqli($servername, $username, $fpassword, $dbname);
@@ -44,7 +44,7 @@ and open the template in the editor.
    $temp="WHERE CAR_ID IS NOT NULL";
      $sql= str_replace($temp,$sqli, $sql);
     
-    echo $sql;
+   // echo $sql;
         // put your code here
     $result = mysqli_query($con,$sql);
     $count=0;
@@ -67,7 +67,7 @@ and open the template in the editor.
   echo '  </div>'; 
   echo '<div class="card-block">';
   echo ' <h5 class="card-title">'.$row['COMPANY_NAME'].' '. $row['CAR_NAME'].' '.'</h5>';
-  echo '<p class="card-text"><h6>'.$row['VARIANT_NAME'].' '.'<br>'. '₹'. $row['E_S_PRICE'].'<h6></p>'; 
+  echo '<p class="card-text"><h6>'.$row['VARIANT_NAME'].' '.'<br>'. 'â‚¹'. $row['E_S_PRICE'].'<h6></p>'; 
   echo '<div class="read-more">';
   
     echo "<button onclick=viewTable('$ide') class='btn btn-primary'>Read more</button>";
