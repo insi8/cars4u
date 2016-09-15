@@ -1,3 +1,7 @@
+
+Back (accesskey b)    Save (accesskey s)    	File: /public_html/index.php
+ 	Status: This file has not yet been saved
+
 <!DOCTYPE html>
   <?php
         session_start();
@@ -25,6 +29,7 @@
     <link href="css/mdb.min.css" rel="stylesheet">
     
         <link rel="stylesheet" href="css/style10.css">
+        <link rel="stylesheet" href="css/footer.css">
          <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
         <script src="js/index1.js"></script>
@@ -121,9 +126,11 @@
             /*Fuction to view car details when user select an entry in the selection result.It hides the
              * selection result 
              * .......-*/
+          
             document.getElementById('tableDisplay').style.display = "block";
             document.getElementById('txtHint').style.display = "none";
             document.getElementById('more').style.display = "none";
+              document.getElementById("wrapper").style.backgroundColor="white";
             
             
             if (str == "") {
@@ -184,6 +191,7 @@
         }
         function goBack()
         {
+            document.getElementById("wrapper").style.backgroundColor="#151515";
             /*Funtion to hide the car details and view the selection result*/
             document.getElementById('tableDisplay').style.display = "none";//"tableDisplay" is car details
             document.getElementById('txtHint').style.display = "block";//"txtHint"selection result
@@ -205,9 +213,9 @@
        <?php
                     $_SESSION['scompany']="";
                     $servername = "localhost";
-                    $username = "root";
-                    $fpassword = "";
-                    $dbname = "oui";
+                    $username = "u959295034_root";
+                    $fpassword = "harikrishnan";
+                    $dbname = "u959295034_oui";
                     $conn = new mysqli($servername, $username, $fpassword, $dbname);// Check connection
                     if ($conn->connect_error) {
                         die("Connection failed: " . $conn->connect_error);
@@ -223,9 +231,10 @@
        
        
       <li>
-          <form>
+          <form>Company
                         <select name="users" onchange="showUser(this.value)">
-                            <option>Select</option>
+                   <option selected="true"disabled="true">None</option>
+                            <option>All</option>
                             <?php
                             // output data of each row
                              while($row = $result->fetch_assoc()) {
@@ -249,16 +258,16 @@
           
           
       </li>
-       <li> <div id="showmodel"><b>
+       <li> Model<div id="showmodel"><b>
 
         <form>
             <select>
-                <option>Select</option>
+                <option>All</option>
 
              </select>
         </form> 
              </b></div></li>
-       <li><form>
+       <li><form>Fuel Type<br>
             <input type="radio" name="fuel" value="All" onchange="showModel(this.value,1)"> All
          <input type="radio" name="fuel" value="Petrol" onchange="showModel(this.value,1)">  petrol
            <input type="radio" name="fuel" value="Diesel" onchange="showModel(this.value,1)">diesel
@@ -274,9 +283,9 @@
             
             
              <div id="slider">
-	<input class="bar" type="range" min="300000" max="3800000" id="rangeinput" value="50000" onchange="rangevalue.value=value;showModel(this.value,4)"/>
+	<input class="bar" type="range" min="300000" max="3800000" id="rangeinput" value="1900000" onchange="rangevalue.value=value;showModel(this.value,4)"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<span class="highlight"></span>
-	<output id="rangevalue">500000</output>
+	<output id="rangevalue">1900000</output>
 </div>
         </form></li>
    
@@ -332,7 +341,7 @@
              <div id="slider">
 	<input class="bar" type="range"  min="0" max="15" id="rangeinput" value="7" onchange="rangevalue.value=value;showModel(this.value,9)"/>
 	<span class="highlight"></span>
-	<output id="rangevalue">7</output>
+	<output id="rangevalue">&nbsp;&nbsp;7</output>
 </div>
         </form></li>     
         
@@ -347,7 +356,7 @@
   <div class="icon"></div>
 </div>
 
-<div class="wrapper">
+<div class="wrapper" id="wrapper">
      <section>
      <img src="images/logo.png">    
     <div id="txtHint" style="display:block;"><b></b></div>
