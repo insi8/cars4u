@@ -1,7 +1,3 @@
-
-Back (accesskey b)    Save (accesskey s)    	File: /public_html/index.php
- 	Status: This file has not yet been saved
-
 <!DOCTYPE html>
   <?php
         session_start();
@@ -283,9 +279,9 @@ Back (accesskey b)    Save (accesskey s)    	File: /public_html/index.php
             
             
              <div id="slider">
-	<input class="bar" type="range" min="300000" max="3800000" id="rangeinput" value="1900000" onchange="rangevalue.value=value;showModel(this.value,4)"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<input class="bar" type="range" min="300000" max="3800000" id="rangeinput" value="3800000" onchange="rangevalue.value=value;showModel(this.value,4)"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<span class="highlight"></span>
-	<output id="rangevalue">1900000</output>
+	<output id="rangevalue">Set</output>
 </div>
         </form></li>
    
@@ -294,9 +290,9 @@ Back (accesskey b)    Save (accesskey s)    	File: /public_html/index.php
             
             
              <div id="slider">
-	<input class="bar" type="range" id="rangeinput" value="50" onchange="rangevalue.value=value;showModel(this.value,5)"/>
+	<input class="bar" type="range" id="rangeinput" value="100" onchange="rangevalue.value=value;showModel(this.value,5)"/>
 	<span class="highlight"></span>
-	<output id="rangevalue">50</output>
+	<output id="rangevalue">Set</output>
 </div>
         </form></li>
         
@@ -306,9 +302,9 @@ Back (accesskey b)    Save (accesskey s)    	File: /public_html/index.php
             
             
              <div id="slider">
-	<input class="bar" type="range" min="0" max="30" id="rangeinput" value="15" onchange="rangevalue.value=value;showModel(this.value,6)"/>
+	<input class="bar" type="range" min="0" max="30" id="rangeinput" value="30" onchange="rangevalue.value=value;showModel(this.value,6)"/>
 	<span class="highlight"></span>
-	<output id="rangevalue">15</output>
+	<output id="rangevalue">Set</output>
 </div>
         </form></li>
          <li><form>Security
@@ -316,9 +312,9 @@ Back (accesskey b)    Save (accesskey s)    	File: /public_html/index.php
             
             
              <div id="slider">
-	<input class="bar" type="range" id="rangeinput" value="50" onchange="rangevalue.value=value;showModel(this.value,7)"/>
+	<input class="bar" type="range" id="rangeinput" value="100" onchange="rangevalue.value=value;showModel(this.value,7)"/>
 	<span class="highlight"></span>
-	<output id="rangevalue">50</output>
+	<output id="rangevalue">Set</output>
 </div>
         </form></li>
           <li><form>Ease of driving
@@ -327,9 +323,9 @@ Back (accesskey b)    Save (accesskey s)    	File: /public_html/index.php
             
             
              <div id="slider">
-	<input class="bar" type="range" id="rangeinput" value="50" onchange="rangevalue.value=value;showModel(this.value,8)"/>
+	<input class="bar" type="range" id="rangeinput" value="100" onchange="rangevalue.value=value;showModel(this.value,8)"/>
 	<span class="highlight"></span>
-	<output id="rangevalue">50</output>
+	<output id="rangevalue">Set</output>
 </div>
         </form></li>
         
@@ -339,9 +335,9 @@ Back (accesskey b)    Save (accesskey s)    	File: /public_html/index.php
             
             
              <div id="slider">
-	<input class="bar" type="range"  min="0" max="15" id="rangeinput" value="7" onchange="rangevalue.value=value;showModel(this.value,9)"/>
+	<input class="bar" type="range"  min="0" max="015" id="rangeinput" value="15" onchange="rangevalue.value=value;showModel(this.value,9)"/>
 	<span class="highlight"></span>
-	<output id="rangevalue">&nbsp;&nbsp;7</output>
+	<output id="rangevalue">Set</output>
 </div>
         </form></li>     
         
